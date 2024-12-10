@@ -18,16 +18,16 @@ public class Percolation {
         }
 
         size = n;
-        int totalSites = n * n + 2; // Add 2 for virtual top and bottom sites
+        int totalSites = n * n + 2;
         grid = new WeightedQuickUnionUF(totalSites);
-        openSites = new boolean[totalSites - 2]; // Don't need booleans for virtual sites
+        openSites = new boolean[totalSites - 2];
 
-        // Connect top row to virtual top site (index n*n)
+
         for (int i = 0; i < n; i++) {
             grid.union(n * n, i);
         }
 
-        // Connect bottom row to virtual bottom site (index n*n + 1)
+
         for (int i = n * (n - 1); i < n * n; i++) {
             grid.union(n * n + 1, i);
         }
@@ -41,17 +41,16 @@ public class Percolation {
             throw new IllegalArgumentException("Row or column out of bounds");
         }
 
-        if (isOpen(row, col)) return; // Site is already open
+        if (isOpen(row, col)) return;
 
         int index = to1D(row, col);
-        openSites[index] = true; // Mark the site as open
-        openSiteCount++; // Increment the count of open sites
+        openSites[index] = true;
+        openSiteCount++;
 
-        // Connect to adjacent open sites (up, down, left, right)
-        if (row > 1 && isOpen(row - 1, col)) grid.union(index, to1D(row - 1, col)); // Up
-        if (row < size && isOpen(row + 1, col)) grid.union(index, to1D(row + 1, col)); // Down
-        if (col > 1 && isOpen(row, col - 1)) grid.union(index, to1D(row, col - 1)); // Left
-        if (col < size && isOpen(row, col + 1)) grid.union(index, to1D(row, col + 1)); // Right
+        if (row > 1 && isOpen(row - 1, col)) grid.union(index, to1D(row - 1, col));
+        if (row < size && isOpen(row + 1, col)) grid.union(index, to1D(row + 1, col));
+        if (col > 1 && isOpen(row, col - 1)) grid.union(index, to1D(row, col - 1));
+        if (col < size && isOpen(row, col + 1)) grid.union(index, to1D(row, col + 1));
     }
 
     public boolean isOpen(int row, int col) {
@@ -65,7 +64,7 @@ public class Percolation {
         if (row <= 0 || row > size || col <= 0 || col > size) {
             throw new IllegalArgumentException("Row or column out of bounds");
         }
-        return grid.connected(to1D(row, col), size * size); // Connect to virtual top site
+        return grid.connected(to1D(row, col), size * size);
     }
 
     public int numberOfOpenSites() {
@@ -73,9 +72,9 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        // The system percolates if the virtual top site (index size*size)
-        // is connected to the virtual bottom site (index size*size + 1)
-        return grid.connected(size * size, size * size + 1); // Virtual top to virtual bottom
+
+
+        return grid.connected(size * size, size * size + 1);
     }
 
     public static void main(String[] args) {
