@@ -4,7 +4,7 @@
  *  Description:  Modeling Percolation.
  ******************************************************************************/
 public class PercolationStats {
-
+ 
     public PercolationStats(int n, int trials) {
         // TODO: perform trials independent experiments on an n-by-n grid
     }
